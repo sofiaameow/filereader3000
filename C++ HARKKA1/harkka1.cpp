@@ -1,48 +1,37 @@
 ﻿#include <iostream>
 #include <fstream>
-using namespace std;
+#include <string>
+#include <cerrno>
+#include <filesystem>
+#include <print>
+#include "readfile.h"
 
-int readfile(string filename, string word);
+enum STATUS {
+	MATCH = 0,
+	IO_ERROR = 1,
+	NO_MATCH = 2
+};
 
-int main()
-{
-	string filename, word; // Luodaan muuttuja jolle varastoida sana ja tiedoston nimi t�ss� tapauksessa;
-    cout << "this is my very amazing first cpp program" << endl;
-	cout << "this program can read a file in the same directory as the program, then check if a word chosen by user shows up in said file" << endl;
-    cout << "if there is no file in the same directory then make one and put some words into it with some spaces inbetween words!" << endl;
-    cout << "note: took me way too long to make" << endl;
-    cout << "" << endl;
-
-	cout << "Enter a filename: ";
-		cin >> filename;
-	cout << "Enter a word: ";
-		cin >> word; // Luetaan käyttäjän inputit, tässä tapauksessa word ja filename (cin = lukee inputin)
-
-	cout << "User chose the following word: " << word << endl; // printataan käyttäjän antama inputti
-
-	readfile(filename, word); // kutsutaan funktio readfile
-
-	system("pause");
-	return 0;
-}
-
-int readfile(string filename, string word)
-{
-    string fileword;
-    ifstream readfiles(filename);
-
-    if (!readfiles) {
-        cout << "But the program wasn't able to open the file." << endl;
-        return 0;
-    }
-
-    while (readfiles >> fileword) {
-        if (fileword == word) {
-            cout << "Which was found inside of file :)" << endl;
-            return 0; // stop once found
-        }
-    }
-
-    cout << "Which was not found in file :(" << endl;
-    return 0;
+int main() {
+    std::string filename, word;
+	std::print("this program can read a file in the same directory as the program, then check if a word chosen by user shows up in said file\n");
+	std::print("Enter file name: ");
+		std::getline(cin, filename); //Write std::cin buffer to string filename.
+		if (std::filesystem::exists(filename) != 1) { return ENOENT; } //Check whether file exists and exit with an error if not (No such file or directory).
+	std::print("\nEnter a word: ");
+		std::getline(cin, word); //Write std::cin buffer to string word.
+	std::println("\nUser chose the following word: {}", word);
+	switch (readfile(filename, word)) {
+		case MATCH: //File open for reading and string match was found.
+			std::println("Which was found inside of file :)");
+			return 0;
+		case IO_ERROR: //File not open for reading, error.
+			std::println("But the program wasn't able to open the file. :(");
+			return -1;
+		case NO_MATCH: //File open for reading but no string match. Not necessarily an error for the operating system's concern, so return 0.
+			std::println("Which was not found in file :(");
+			return 0;
+		default:
+			std::println(std:cerr, "An unknown error occurred.");
+			return -1;
 }
