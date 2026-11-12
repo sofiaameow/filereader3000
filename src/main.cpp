@@ -34,4 +34,6 @@ int main() {
 		default:
 			std::println(std::cerr, "An unknown error occurred.");
 			return -1;
+	}
 }
+
