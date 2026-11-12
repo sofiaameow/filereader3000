@@ -1,8 +1,6 @@
 # FileReader3000
   Fork of a friend's first project, experimenting with various concepts particularly from modern C++ versions to try to improve it.
   Basically my own little project, but the original code is not mine. (sylasx/filereader3000)
-  >[!TIP]
-  >This software is basically useless as modern libraries do more useful things with much less code.
 ## Requirements
   - C++23 compatible compiler
   - CMake 3.20 or higher
