@@ -4,16 +4,19 @@
 #include "readfile.h"
 
 int readfile(std::string filename, std::string word) {		
-	std::string fileword;
+  std::string fileword;
   std::ifstream FILE;
 	
   FILE.open(filename);
 
   if (FILE.is_open()) {
-		int status;
-    while (getline(FILE, fileword)) { status = (fileword.find(word) != std::string::npos) ? 0 : 2; } //If word is found (fileword == word (determined by checking fileword != npos)), status = 0. Otherwise status = 2.
+    while (getline(FILE, fileword)) { 
+		if (fileword.contains(word)) { 
+			FILE.close(); return 0; 
+		} 
+	}
 		FILE.close();
-		return status;
+		return 2;
 	} 
   else { return 1; }
 }
