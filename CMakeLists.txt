@@ -11,6 +11,6 @@ add_executable(filereader3000
     src/readfile.cpp
 )
 
-target_include_directories(filereader3000 PRIVATE
-    ${PROJECT_SOURCE_DIR}/include
-)
+target_include_directories(filereader3000 PRIVATE include)
+
+target_link_libraries(filereader3000 PRIVATE stdc++exp)
