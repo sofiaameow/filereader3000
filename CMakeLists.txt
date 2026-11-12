@@ -1,16 +1,16 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(MyProject LANGUAGES CXX)
+project(filereader3000 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-add_executable(MyProject
+add_executable(filereader3000
     src/main.cpp
     src/readfile.cpp
 )
 
-target_include_directories(MyProject PRIVATE
+target_include_directories(filereader3000 PRIVATE
     ${PROJECT_SOURCE_DIR}/include
 )
